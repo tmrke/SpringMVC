@@ -25,4 +25,26 @@ public class FirstController {
     public String goodbyePage() {
         return "first/goodbye";
     }
+
+    @GetMapping("/calculator")
+    public String calculator(HttpServletRequest request, Model model) {
+        double a = Double.parseDouble(request.getParameter("a"));
+        double b = Double.parseDouble(request.getParameter("b"));
+        String stringResult;
+
+        String action = request.getParameter("action");
+
+        switch (action) {
+            case "multiplication" -> stringResult = String.valueOf(a * b);
+            case "addition" -> stringResult = String.valueOf(a + b);
+            case "subtraction" -> stringResult = String.valueOf(a - b);
+            case "division" -> stringResult = String.valueOf(a / b);
+
+            default -> stringResult = "this action not exist";
+        }
+
+        model.addAttribute("result", "result a & b = " + stringResult);
+
+        return "first/calculator";
+    }
 }
