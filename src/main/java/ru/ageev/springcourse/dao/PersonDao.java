@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 import ru.ageev.springcourse.model.Person;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -15,10 +14,10 @@ public class PersonDao {
     {
         people = new ArrayList<>();
 
-        people.add(new Person(++PEOPLE_COUNT, "Person1"));
-        people.add(new Person(++PEOPLE_COUNT, "Person2"));
-        people.add(new Person(++PEOPLE_COUNT, "Person3"));
-        people.add(new Person(++PEOPLE_COUNT, "Person4"));
+        people.add(new Person(++PEOPLE_COUNT, "Person1", 20, "person1@mail.com"));
+        people.add(new Person(++PEOPLE_COUNT, "Person2", 22, "person2@mail.com"));
+        people.add(new Person(++PEOPLE_COUNT, "Person3", 24, "person3@mail.com"));
+        people.add(new Person(++PEOPLE_COUNT, "Person4", 26, "person4@mail.com"));
     }
 
     public List<Person> index() {
@@ -35,7 +34,10 @@ public class PersonDao {
     }
 
     public void update(Person person, int id) {
-        show(id).setName(person.getName());
+        Person personToUpdate = show(id);
+        personToUpdate.setName(person.getName());
+        personToUpdate.setAge(person.getAge());
+        personToUpdate.setEmail(person.getEmail());
     }
 
     public void delete(int id) {
