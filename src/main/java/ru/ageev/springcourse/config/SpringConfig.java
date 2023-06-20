@@ -19,15 +19,15 @@ import java.util.Objects;
 @Configuration
 @ComponentScan("ru.ageev.springcourse")
 @EnableWebMvc
-//@PropertySource("classpath:database.properties")
+@PropertySource("classpath:database.properties")
 public class SpringConfig implements WebMvcConfigurer {
     private final ApplicationContext applicationContext;
-//    private final Environment environment;
+    private final Environment environment;
 
     @Autowired
     public SpringConfig(ApplicationContext applicationContext, Environment environment) {
         this.applicationContext = applicationContext;
-//        this.environment = environment;
+        this.environment = environment;
     }
 
     @Bean
@@ -53,10 +53,10 @@ public class SpringConfig implements WebMvcConfigurer {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/first_db");
-        dataSource.setUsername("root");
-        dataSource.setPassword("1234");
+        dataSource.setDriverClassName(Objects.requireNonNull(environment.getProperty("driver")));
+        dataSource.setUrl(environment.getProperty("url"));
+        dataSource.setUsername(environment.getProperty("login"));
+        dataSource.setPassword(environment.getProperty("password"));
 
         return dataSource;
     }
