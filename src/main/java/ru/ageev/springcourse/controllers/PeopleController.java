@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.ageev.springcourse.dao.PersonDao;
 import ru.ageev.springcourse.model.Person;
 
-import javax.naming.Binding;
-
 @Controller
 @RequestMapping("/people")
 public class PeopleController {

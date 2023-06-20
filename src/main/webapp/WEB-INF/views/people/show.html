@@ -6,6 +6,7 @@
 </head>
 <body>
 <p th:text="${person.getName() + ', ' + person.getAge()}"></p>
+<p th:text="${person.getId()}"></p>
 <a th:href="@{/people/{id}/edit(id=${person.getId()})}">edit</a>
 
 <form th:method="delete" th:action="@{/people/{id}(id=${person.getId()})}">
