@@ -27,13 +27,13 @@ public class PersonDao {
 
     public Person show(int id) {
         return jdbcTemplate.query(
-                "SELECT * FROM people WHERE id=?", new Object[]{id},new BeanPropertyRowMapper<>(Person.class)
+                "SELECT * FROM people WHERE id=?", new Object[]{id}, new BeanPropertyRowMapper<>(Person.class)
         ).stream().findAny().orElse(null);
     }
 
     public void save(Person person) {
         jdbcTemplate.update(
-                "INSERT INTO people VALUES (?, ?, ?)",
+                "INSERT INTO people(name, age, email) VALUES (?, ?, ?)",
                 person.getName(),
                 person.getAge(),
                 person.getEmail()
@@ -45,7 +45,8 @@ public class PersonDao {
                 "UPDATE people SET name=?, age=?, email=? WHERE id=?",
                 updatedPerson.getName(),
                 updatedPerson.getAge(),
-                updatedPerson.getEmail());
+                updatedPerson.getEmail(),
+                id);
     }
 
     public void delete(int id) {
