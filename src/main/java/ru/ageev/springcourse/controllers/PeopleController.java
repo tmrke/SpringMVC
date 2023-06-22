@@ -7,14 +7,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.ageev.springcourse.dao.PersonDao;
 import ru.ageev.springcourse.model.Person;
+import ru.ageev.springcourse.util.PersonValidator;
 
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
     private final PersonDao personDao;
+    private final PersonValidator personValidator;
 
-    public PeopleController(PersonDao personDao) {
+    public PeopleController(PersonDao personDao, PersonValidator personValidator) {
         this.personDao = personDao;
+        this.personValidator = personValidator;
     }
 
     @GetMapping()
@@ -40,6 +43,8 @@ public class PeopleController {
 
     @PostMapping()
     public String create(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult) {
+        personValidator.validate(person, bindingResult);
+
         if (bindingResult.hasErrors()) {
             return "people/new";
         }
@@ -60,6 +65,8 @@ public class PeopleController {
     public String update(@ModelAttribute("person") @Valid Person person,
                          BindingResult bindingResult,
                          @PathVariable("id") int id) {
+        personValidator.validate(person, bindingResult);
+
         if (bindingResult.hasErrors()) {
             return "people/edit";
         }
